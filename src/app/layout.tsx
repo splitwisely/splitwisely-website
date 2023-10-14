@@ -1,20 +1,19 @@
-import { Navigation } from "./components/header/Navigation";
-import './globals.css'
+import { Navigation } from './components/header/Navigation';
+import Head from 'next/head';
+import './globals.css';
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <head>
+    <>
+      <Head>
         <title>Splitwisely</title>
-      </head>
-      <body>
-        <Navigation />
-        {children}
-      </body>
-    </html>
-  )
+      </Head>
+      <Navigation />
+      {children}
+    </>
+  );
 }
