@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import styles from './styles.module.css';
 
-const SignUp = () => {
+const SignIn = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -17,10 +19,7 @@ const SignUp = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Here you might send formData to your API
-    // But for now, let's just log it
-
-    const response = await fetch('/api/signup', {
+    const response = await fetch('/api/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,15 +28,18 @@ const SignUp = () => {
     });
 
     const data = await response.json();
-    console.log("🚀 ~ file: page.tsx:32 ~ handleSubmit ~ data:", data)
 
-
-    console.log(formData);
+    if (data.success) {
+      router.push('/dashboard');
+    } else {
+      // Handle the error message, for example:
+      console.error(data.error);
+    }
   };
 
   return (
     <div className={styles.container}>
-      <h1>Sign Up</h1>
+      <h1>Sign In</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label className={styles.label}>Email:</label>
@@ -61,10 +63,10 @@ const SignUp = () => {
             required
           />
         </div>
-        <button type='submit'>Sign Up</button>
+        <button type='submit'>Sign In</button>
       </form>
     </div>
   );
 };
 
-export default SignUp;
+export default SignIn;

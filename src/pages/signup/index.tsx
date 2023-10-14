@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import styles from './styles.module.css';
 
-const SignIn = () => {
+const SignUp = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -14,17 +14,28 @@ const SignIn = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Here you might send formData to your API
     // But for now, let's just log it
+
+    const response = await fetch('/api/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
     console.log(formData);
   };
 
   return (
     <div className={styles.container}>
-      <h1>Sign In</h1>
+      <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label className={styles.label}>Email:</label>
@@ -48,10 +59,10 @@ const SignIn = () => {
             required
           />
         </div>
-        <button type='submit'>Sign In</button>
+        <button type='submit'>Sign Up</button>
       </form>
     </div>
   );
 };
 
-export default SignIn;
+export default SignUp;
